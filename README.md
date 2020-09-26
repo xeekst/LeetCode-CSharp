@@ -1,7 +1,6 @@
+# LeetCode-CSharp
 
-
-#### LeetCode 刷题记录
-- [1. 两数之和](./markdown/1.LeetCode.md) 
-- [2. 两数相加](./markdown/2.LeetCode.md) 
-
-- [404. 左叶子之和](./markdown/404.LeetCode.md) 
+1. [两数之和](./markdown/1.两数之和.md)
+2. [两数相加](./markdown/2.两数相加.md)
+232. [用栈实现队列](./markdown/232.用栈实现队列.md)
+404. [左叶子之和](./markdown/404.左叶子之和.md)
