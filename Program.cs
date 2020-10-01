@@ -135,6 +135,28 @@ namespace LeetCode
             return roffset;
         }
 
+        public static int Reverse(int x)
+        {
+            if (x > int.MaxValue || x <= int.MinValue) return 0;
+            Stack<int> numStack = new Stack<int>();
+            int f = x < 0 ? -1 : 1;
+            x = Math.Abs(x);
+            while (x > 0)
+            {
+                int k = x % 10;
+                numStack.Push(k);
+                x /= 10;
+            }
+            long y = 0;
+            int n = numStack.Count;
+            while (numStack.Count > 0)
+            {
+                y = y + (long)Math.Pow(10.0, n - numStack.Count * 1.0) * numStack.Pop();
+            }
+            if (y > int.MaxValue || y < int.MinValue) return 0;
+            return (int)y * f;
+        }
+
         static void Main(string[] args)
         {
             // TreeNode root = new TreeNode(1);
@@ -158,7 +180,8 @@ namespace LeetCode
             int[] num2 = new int[2] { 3, 4 };
 
 
-            Console.WriteLine(FindMedianSortedArrays(num1, num2));
+
+            Console.WriteLine(Reverse(-2147483648));
         }
     }
 }
