@@ -55,7 +55,7 @@ namespace LeetCode
             }
             return root;
         }
-        
+
         public class TreeNode
         {
             public int val;
@@ -71,6 +71,70 @@ namespace LeetCode
             return sumLeft + SumOfLeftLeaves(root.right);
         }
 
+        public static double FindMedianSortedArrays(int[] nums1, int[] nums2)
+        {
+            int len = nums1.Length + nums2.Length;
+            // 判断奇偶性
+            bool isOddNumber = len % 2 == 1;
+            int m = isOddNumber ? len / 2 + 1 : len / 2;
+            int k = m;
+
+            int p1 = -1;
+            int p2 = -1;
+            int k2 = k / 2;
+            while (k2 > 0 && p1 < nums1.Length - 1 && p2 < nums2.Length - 1)
+            {
+                int k2_1 = GetOffset(p1, k2, nums1);
+                int k2_2 = GetOffset(p2, k2, nums2);
+                k2 = k2_1 < k2_2 ? k2_1 : k2_2;
+
+                int offsetP1 = p1 + k2;
+                int offsetP2 = p2 + k2;
+                if (nums1[offsetP1] < nums2[offsetP2])
+                {
+                    p1 = offsetP1;
+                }
+                else
+                {
+                    p2 = offsetP2;
+                }
+                k = k - k2;
+                k2 = k / 2;
+            }
+
+            // 最终p1、p2为 nums 删除的最后一个元素 index
+
+            // 下一个元素
+            int l1 = p1 + 1;
+            int l2 = p2 + 1;
+
+            //如果是奇数
+            if (isOddNumber)
+            {
+                if (l1 > nums1.Length - 1) return nums2[m - p1 - 2];
+                if (l2 > nums2.Length - 1) return nums1[m - p2 - 2];
+                return nums2[l2] < nums1[l1] ? nums2[l2] : nums1[l1];
+            }
+            else
+            {
+                if (l1 > nums1.Length - 1) return (nums2[m - p1 - 2] + nums2[m - p1 - 1]) / 2.0;
+                if (l2 > nums2.Length - 1) return (nums1[m - p2 - 2] + nums1[m - p2 - 1]) / 2.0;
+                int m1 = nums2[l2] < nums1[l1] ? nums2[l2++] : nums1[l1++];
+
+                if (l1 > nums1.Length - 1) return (nums2[l2] + m1) / 2.0;
+                if (l2 > nums2.Length - 1) return (nums1[l1] + m1) / 2.0;
+                int m2 = nums2[l2] < nums1[l1] ? nums2[l2] : nums1[l1];
+                return (m1 + m2) / 2.0;
+            }
+
+        }
+
+        private static int GetOffset(int index, int offset, int[] nums)
+        {
+            int roffset = (index + offset) > nums.Length - 1 ? nums.Length - 1 - index : offset;
+            return roffset;
+        }
+
         static void Main(string[] args)
         {
             // TreeNode root = new TreeNode(1);
@@ -84,11 +148,17 @@ namespace LeetCode
             // l1.right = r2;
             // Console.WriteLine(SumOfLeftLeaves(root));
 
-            ListNode l1 = new ListNode(5);
-            ListNode l2 = new ListNode(5);
-            ListNode l21 = new ListNode(9);
-            l2.next = l21;
-            AddTwoNumbers(l1, l2);
+            // int[] num1 = new int[10] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+            // int[] num2 = new int[9] { 11, 12, 13, 14, 15, 16, 17, 18, 19 };
+
+            // int[] num1 = new int[8] { 1, 2, 3, 4, 5, 6, 7, 8 };
+            // int[] num2 = new int[9] { 9, 10, 11, 12, 13, 14, 15, 16, 17 };
+
+            int[] num1 = new int[2] { 1, 2 };
+            int[] num2 = new int[2] { 3, 4 };
+
+
+            Console.WriteLine(FindMedianSortedArrays(num1, num2));
         }
     }
 }
