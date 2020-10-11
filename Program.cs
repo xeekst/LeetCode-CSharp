@@ -156,7 +156,21 @@ namespace LeetCode
             if (y > int.MaxValue || y < int.MinValue) return 0;
             return (int)y * f;
         }
-
+        public bool IsPalindrome(int x)
+        {
+            if (x < 0) return false;
+            string strLeft = string.Empty;
+            string strRight = string.Empty;
+            while (x != 0)
+            {
+                int k = x % 10;
+                strLeft = k + strLeft;
+                strRight = strRight + k;
+                x = x / 10;
+            }
+            if(strLeft == strRight) return true;
+            return false;
+        }
         static void Main(string[] args)
         {
             // TreeNode root = new TreeNode(1);
